@@ -149,7 +149,7 @@ function Product() {
                 </div>
               </div>
             </div>
-            <div className="flex space-x-2 items-center ">
+            <div className="flex mt-4 space-x-2 items-center ">
                 <input
                 className="w-16 border-solid border-2 border-black p-2 h-10 rounded"
                 type="number"
