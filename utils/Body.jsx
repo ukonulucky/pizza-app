@@ -2,8 +2,9 @@ import Image from 'next/image'
 import React from 'react'
 import Others from './Others'
 import Pizza from './Pizza'
+import axios from 'axios'
 
-function Body() {
+export default function Body({pizzaList}) {
   return (
     <div className='mt-8'>
         <div className='m-auto w-full md:w-1/2 mb-8 px-2 '>
@@ -17,15 +18,17 @@ function Body() {
     <div className='flex flex-wrap justify-around
     w-full 
     items-center'>
-        <Pizza />
-        <Pizza />
-        <Pizza />
-        <Pizza />
-        <Pizza />
+      {
+        pizzaList.map(pizza =>   <Pizza id={pizza._id} pizza = {pizza} />)
+      }
+        
     </div>
     
     </div>
   )
 }
 
-export default Body
+
+
+
+

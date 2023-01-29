@@ -70,6 +70,7 @@ img{
   opacity: 0;
   }
 }
+ 
 .processing{
   font-size: 3rem;
   animation: processAnimate 1s ease infinite alternate;
