@@ -42,7 +42,7 @@ imageList = [
         <Slider {...settings}>
           {
             this.imageList.map(i => (
-             <div key={i.id} className="relative h-screen w-100%">
+             <div key={i.id} className="relative w-screen  h-80 sm:h-screen ">
                <Image
                src={i.url} 
                layout="fill"

@@ -32,21 +32,21 @@ function Product() {
             </div>
           </div>
           <div className="  sm:w-1/2 xs:w-full  flex-col ">
-            <h2 className="text-black font-bold uppercase text-4xl xs:p-4 sm:p-0">
+            <h2 className="text-black text-center sm:text-left  sm:m-0 font-bold uppercase text-4xl xs:p-4 sm:p-0">
               {i.type}
             </h2>
 
-            <span className="text-red-500 underline underline-red-300 text-lg font-bold ">
+            <span className="text-red-500 w-full  block text-center sm:text-left underline underline-red-300 text-2xl my-4 sm:my-0 sm:text-lg font-bold ">
               $ {i.amount[amountIndex]}
             </span>
-            <p className="text-black-300">{i.description}</p>
+            <p className="text-black-300 text-center sm:text-justify px-4 sm:px-0">{i.description}</p>
 
-            <h3 className="text-black-400 font-bold text-lg">
+            <h3 className="text-black-400 text-2xl text-center sm:text-left mt-8 sm:mt-0  font-bold sm:text-lg">
               Choose the size
             </h3>
 
             <div
-              className="flex justify-between items-start w-1/2 mt-8
+              className="flex justify-between items-start w-full sm:w-1/2 mt-8 px-8 sm:px-0
                 "
             >
               <div
@@ -100,11 +100,11 @@ function Product() {
                 </span>
               </div>
             </div>
-            <div className="flex-col mt-4">
-              <h2 className="font-bold text-xl text-black">
+            <div className="flex-col mt-4 sm:mt-4 ">
+              <h2 className="font-bold  text-center sm:text-left text-2xl sm:text-xl text-black capitalize ">
                 Choose additional incredients
               </h2>
-              <div className="flex space-x-8 mt-4">
+              <div className="flex-col space-y-4 px-4 sm:px-0 sm:flex sm:space-x-8 mt-4 ">
                 <div className="flex space-x-2">
                   <input
                     type="checkbox"
@@ -149,7 +149,7 @@ function Product() {
                 </div>
               </div>
             </div>
-            <div className="flex mt-4 space-x-2 items-center ">
+            <div className="flex pl-4 sm:pl-0 mt-8 sm:mt-4 space-x-2 items-center ">
                 <input
                 className="w-16 border-solid border-2 border-black p-2 h-10 rounded"
                 type="number"
@@ -157,7 +157,6 @@ function Product() {
                 <button className="bg-red-500 rounded-md capitalize p-2 border-0 text-white">
                     add cart
                 </button>
-
             </div>
           </div>
         </div>
