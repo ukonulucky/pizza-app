@@ -8,14 +8,21 @@ import axios from "axios"
 
 
 
+
+
+
 export default function Home({ pizzaList }) {
   console.log(pizzaList)
+
+
  
   return (
+   
    <div className="overflow-hidden">
-    <SliderComponent />
+  <SliderComponent />
     <Body pizzaList ={ pizzaList } />
    </div>
+ 
     )
 }
 

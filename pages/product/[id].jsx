@@ -2,14 +2,18 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import ProductModel from "../../models/ProductModel";
 import axios from "axios"
+import { useDispatch, useSelector } from "react-redux";
+import { addCart } from "../../redux/cartSlice";
 
 export default function Product({pizza}) {
-  console.log(`this is the product ${pizza}`)
+ const dispatch = useDispatch()
+
   const [price, setPrice] = useState(0);
   const [checkedAmount, setCheckedAmount] = useState(0);
   const [amountIndex, setAmountIndex] = useState(0);
   const [extraOptions, setExtraOptions] = useState([]);
   const [quantity, setQuantity] = useState(1);
+  const [size, setSize] = useState("small")
 const handleCheck = (e,options) => {
   const checked = e.target.checked
   if(checked){
@@ -30,7 +34,18 @@ const price = pizza.prices[amountIndex]
 const totalAmount = price + checkedAmount
 setPrice(totalAmount)
 }
-console.log(extraOptions)
+
+const handleDispatch = (item) => {
+  const product = {
+    img: item.img,
+    title: item.title,
+    price: price,
+    extraOptions,
+    size,
+    quantity: quantity,
+  }
+dispatch(addCart(product))  
+}
 
 useEffect(() => {
   handleAmount()
@@ -76,6 +91,7 @@ useEffect(() => {
               className="relative w-16 h-16 cursor-pointer"
               onClick={() => {
                 setAmountIndex(0);
+                setSize("small")
               }}
             >
               <Image
@@ -93,6 +109,7 @@ useEffect(() => {
               className="relative  h-20 w-20 cursor-pointer"
               onClick={() => {
                 setAmountIndex(1);
+                setSize("medium")
               }}
             >
               <Image
@@ -110,6 +127,7 @@ useEffect(() => {
               className="relative w-24 h-24  cursor-pointer"
               onClick={() => {
                 setAmountIndex(2);
+                setSize("large")
               }}
             >
               <Image
@@ -152,12 +170,15 @@ useEffect(() => {
               className="w-16 border-solid border-2 border-black p-2 h-10 rounded"
               type="number"
               defaultValue={1}
+              value = {quantity}
               onChange = {
-                () => {
+                (e) => {
                   setQuantity(e.target.value)
                 }
               } />
-              <button className="bg-red-500 rounded-md capitalize p-2 border-0 text-white">
+              <button className="bg-red-500 rounded-md capitalize p-2 border-0 text-white" onClick={() => {
+               handleDispatch(pizza)
+              }}>
                   add cart
               </button>
           </div>
@@ -169,7 +190,7 @@ useEffect(() => {
 }
 
 export const getServerSideProps = async (context) => {
-console.log("this code is running")
+
 const {id} = context.query
 
 try {
