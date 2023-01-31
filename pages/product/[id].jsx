@@ -1,12 +1,41 @@
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ProductModel from "../../models/ProductModel";
 import axios from "axios"
 
 export default function Product({pizza}) {
   console.log(`this is the product ${pizza}`)
+  const [price, setPrice] = useState(0);
+  const [checkedAmount, setCheckedAmount] = useState(0);
   const [amountIndex, setAmountIndex] = useState(0);
+  const [extraOptions, setExtraOptions] = useState([]);
+  const [quantity, setQuantity] = useState(1);
+const handleCheck = (e,options) => {
+  const checked = e.target.checked
+  if(checked){
+    console.log("button  checked")
+    console.log(options)
+     setCheckedAmount(checkedAmount + options.amount)
+     setExtraOptions(prev => [...prev, options] )
+   
+  } else{
+    console.log("button not checked")
+    setCheckedAmount(checkedAmount - options.amount)
+    setExtraOptions(extraOptions.filter(i => i._id !== options._id))
  
+  }
+}
+const handleAmount = () => {
+const price = pizza.prices[amountIndex]
+const totalAmount = price + checkedAmount
+setPrice(totalAmount)
+}
+console.log(extraOptions)
+
+useEffect(() => {
+  handleAmount()
+}, [checkedAmount, amountIndex])
+
 
   return (
     <div className="flex-col justify-around w-full">
@@ -31,7 +60,7 @@ export default function Product({pizza}) {
           </h2>
 
           <span className="text-red-500 w-full  block text-center sm:text-left underline underline-red-300 text-2xl my-4 sm:my-0 sm:text-lg font-bold ">
-            $ {pizza.prices[amountIndex]}
+            $ {price}
           </span>
           <p className="text-black-300 text-center sm:text-justify px-4 sm:px-0">{pizza.desc}</p>
 
@@ -99,55 +128,35 @@ export default function Product({pizza}) {
               Choose additional incredients
             </h2>
             <div className="flex-col space-y-4 px-4 sm:px-0 sm:flex sm:space-x-8 mt-4 ">
-              <div className="flex space-x-2">
+             
+             {
+              pizza.extraOptions.map(options => (
+                <div className="flex space-x-2" key={options._id}>
                 <input
                   type="checkbox"
-                  className="w-6 h-6"
-                  name="ingredients"
-                  id="ingredients"
+                  className="w-5 h-5"
+                  name={options.text}
+                  id={options.text}
+                  onChange = {(e) => {
+                    handleCheck(e,options)
+                  }}
                 />
-                <label htmlFor="ingredients">Double Ingredients</label>
+                <label htmlFor={options.text} className="capitalize">{options.text}</label>
               </div>
-              <div className="flex space-x-2">
-                <input
-                  type="checkbox"
-                  className="w-6 h-6"
-                  name="extra"
-                  id="extra"
-                />
-                <label htmlFor="extra" className="capitalize font-light">
-                  extra cheese
-                </label>
-              </div>
-              <div className="flex space-x-2">
-                <input
-                  type="checkbox"
-                  className="w-6 h-6"
-                  name="spicy"
-                  id="spicy"
-                />
-                <label htmlFor="spicy" className="capitalize font-light">
-                  spicy sauce
-                </label>
-              </div>
-              <div className="flex space-x-2">
-                <input
-                  type="checkbox"
-                  className="w-6 h-6"
-                  name="gallic"
-                  id="gallic"
-                />
-                <label htmlFor="gallic" className="capitalize font-light">
-                  gallic sauce
-                </label>
-              </div>
+              ))
+             }
             </div>
           </div>
           <div className="flex pl-4 sm:pl-0 mt-8 sm:mt-4 space-x-2 items-center ">
               <input
               className="w-16 border-solid border-2 border-black p-2 h-10 rounded"
               type="number"
-              defaultValue={1} />
+              defaultValue={1}
+              onChange = {
+                () => {
+                  setQuantity(e.target.value)
+                }
+              } />
               <button className="bg-red-500 rounded-md capitalize p-2 border-0 text-white">
                   add cart
               </button>
